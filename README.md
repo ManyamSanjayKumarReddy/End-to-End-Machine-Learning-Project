@@ -1,7 +1,6 @@
 # End-to-End-Machine-Learning-Project
 
-## Exception.py File Explanation 
-
+## exception.py File Explanation 
 
 ```python
 import sys
@@ -63,3 +62,43 @@ return self.error_message
 ```
 This line returns the error message stored in the `self.error_message` attribute.
 
+
+## logger.py File Explanation 
+
+```python
+import logging
+import os
+from datetime import datetime
+```
+- This section imports the necessary modules: `logging` for logging functionality, `os` for working with file paths and directories, and `datetime` for generating timestamps.
+
+```python
+LOG_FILE = f"{datetime.now().strftime('%m_%d_%Y_%H_%M_%S')}.log"
+```
+- This line creates a timestamped log file name using the current date and time. The `datetime.now()` function returns the current date and time, and `strftime('%m_%d_%Y_%H_%M_%S')` formats it as "month_day_year_hour_minute_second". The `.log` extension is appended to the file name.
+
+```python
+logs_path = os.path.join(os.getcwd(), "logs", LOG_FILE)
+os.makedirs(logs_path, exist_ok=True)
+```
+- Here, `logs_path` is created by joining the current working directory (`os.getcwd()`), the "logs" folder, and the `LOG_FILE` name. The `os.makedirs()` function is used to create the necessary directories if they don't exist, with the `exist_ok=True` parameter ensuring that no exception is raised if the directories already exist.
+
+```python
+LOG_FILE_PATH = os.path.join(logs_path, LOG_FILE)
+```
+- This line creates the full path to the log file by joining `logs_path` and `LOG_FILE`.
+
+```python
+logging.basicConfig(
+    filename=LOG_FILE_PATH,
+    format="[ %(asctime)s ] %(lineno)d %(name)s - %(levelname)s - %(message)s",
+    level=logging.INFO
+)
+```
+- Here, the logging configuration is set up using `basicConfig()` from the `logging` module. The `filename` parameter specifies the log file path. The `format` parameter sets the format for the log messages, including the timestamp (`%(asctime)s`), line number (`%(lineno)d`), logger name (`%(name)s`), log level (`%(levelname)s`), and the actual log message (`%(message)s`). The `level` parameter sets the logging level to `INFO`, which means that log messages with severity level `INFO` and above will be recorded in the log file.
+
+```python
+# if __name__ == "__main__":
+#     logging.info("Logging has Started")
+```
+- These lines are commented out in the code snippet. If uncommented, they would log the message "Logging has Started" with the `INFO` level when the script is directly executed, indicating that the logging process has begun.
